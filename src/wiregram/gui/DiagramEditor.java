@@ -9,6 +9,7 @@ import model.Component;
 import model.Connector;
 import model.Diagram;
 import model.DiagramObject;
+import model.Pin;
 
 /**
  *
@@ -58,6 +59,12 @@ public class DiagramEditor extends javax.swing.JPanel {
         bccu_plug.setParent(BCCU);
         bccu_plug.setParentOffset(BCCU.getWidth(), 0);
         diagram.add(bccu_plug);
+        
+        bccu_plug.addPin(new Pin(diagram, bccu_plug, "A"));
+        bccu_plug.addPin(new Pin(diagram, bccu_plug, "B"));
+        bccu_plug.addPin(new Pin(diagram, bccu_plug, "C"));
+        bccu_plug.addPin(new Pin(diagram, bccu_plug, "D"));
+        bccu_plug.addPin(new Pin(diagram, bccu_plug, "E"));
     }
     
     /**
