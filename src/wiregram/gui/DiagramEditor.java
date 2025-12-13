@@ -35,25 +35,25 @@ public class DiagramEditor extends javax.swing.JPanel {
      * Inserts example data for testing phase stuff
      */
     private void initFakeData() {
-        Component BCCU = new Component("28 BCCU", "2180B1");
+        Component BCCU = new Component(diagram, "28 BCCU", "2180B1");
         BCCU.setLocation(50, 150);
         BCCU.setHeight(200);
         BCCU.setWidth(100);
         diagram.add(BCCU);
         
-        Component battery28 = new Component("28 Batt", "2180B2");
+        Component battery28 = new Component(diagram, "28 Batt", "2180B2");
         battery28.setLocation(BCCU.getRect().getRightBound() + 200, BCCU.getY());
         diagram.add(battery28);
         
-        Component EDU1 = new Component("EDU1", "2220B1");
+        Component EDU1 = new Component(diagram, "EDU1", "2220B1");
         EDU1.setLocation(battery28.getX(), 0);
         diagram.add(EDU1);
 
-        Component wow_switch = new Component("WOW SWITCH", "32B15");
+        Component wow_switch = new Component(diagram, "WOW SWITCH", "32B15");
         wow_switch.setLocation(100, 50);
         diagram.add(wow_switch);
         
-        Connector bccu_plug = new Connector();
+        Connector bccu_plug = new Connector(diagram, "J1/P1");
         bccu_plug.setRefDes("J1/P1");
         bccu_plug.setParent(BCCU);
         bccu_plug.setParentOffset(BCCU.getWidth(), 0);
