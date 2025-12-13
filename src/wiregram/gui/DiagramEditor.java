@@ -55,8 +55,8 @@ public class DiagramEditor extends javax.swing.JPanel {
         
         Connector bccu_plug = new Connector();
         bccu_plug.setRefDes("J1/P1");
-        bccu_plug.setParentComponent(BCCU);
-        bccu_plug.setLocationOffset(BCCU.getWidth(), 0);
+        bccu_plug.setParent(BCCU);
+        bccu_plug.setParentOffset(BCCU.getWidth(), 0);
         diagram.add(bccu_plug);
     }
     
