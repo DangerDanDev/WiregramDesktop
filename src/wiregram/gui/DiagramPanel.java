@@ -68,7 +68,7 @@ public class DiagramPanel extends javax.swing.JPanel {
                 g2d.setStroke(SELECTED_ITEM_STROKE);
             }
             
-            Artist.drawComponent(cameraPosition, item, g2d);
+            Artist.drawDiagramItem(cameraPosition, item, g2d);
             
             resetColorAndStroke(g2d);
         }
