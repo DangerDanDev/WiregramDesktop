@@ -56,15 +56,16 @@ public class DiagramEditor extends javax.swing.JPanel {
         
         Connector bccu_plug = new Connector(diagram, "J1/P1");
         bccu_plug.setRefDes("J1/P1");
-        bccu_plug.setParent(BCCU);
         bccu_plug.setParentOffset(BCCU.getWidth(), 0);
-        diagram.add(bccu_plug);
+        BCCU.addChild(bccu_plug);
+        //bccu_plug.setParent(BCCU);
+        //diagram.add(bccu_plug);
         
-        bccu_plug.addPin(new Pin(diagram, bccu_plug, "A"));
-        bccu_plug.addPin(new Pin(diagram, bccu_plug, "B"));
-        bccu_plug.addPin(new Pin(diagram, bccu_plug, "C"));
-        bccu_plug.addPin(new Pin(diagram, bccu_plug, "D"));
-        bccu_plug.addPin(new Pin(diagram, bccu_plug, "E"));
+        bccu_plug.addChild(new Pin(diagram, "A"));
+        bccu_plug.addChild(new Pin(diagram, "B"));
+        bccu_plug.addChild(new Pin(diagram, "C"));
+        bccu_plug.addChild(new Pin(diagram, "D"));
+        bccu_plug.addChild(new Pin(diagram, "E"));
     }
     
     /**

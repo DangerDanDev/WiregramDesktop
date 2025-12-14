@@ -4,12 +4,16 @@
  */
 package wiregram.gui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
 import model.Component;
 import model.Connector;
+import model.Diagram;
 import model.math.Coordinate;
 import model.DiagramObject;
 import model.math.Rect;
@@ -19,10 +23,33 @@ import model.math.Rect;
  * @author scyth
  */
 public class Artist {
-    public static void drawDiagramItem(Coordinate camera, DiagramObject item, Graphics2D g2d) {
-        
+    
+    public static final Color DEFAULT_DRAW_COLOR = Color.BLACK;
+    public static final Stroke DEFAULT_STROKE = new BasicStroke(1);
+    
+    private static void resetColorAndStroke(Graphics2D g) { 
+        g.setColor(DEFAULT_DRAW_COLOR); 
+        g.setStroke(DEFAULT_STROKE); 
+    }
+    
+    public static final Color SELECTED_ITEM_DRAW_COLOR = Color.GREEN;
+    public static final Stroke SELECTED_ITEM_STROKE = new BasicStroke(2);
+    
+    public static void draw(Coordinate camera, Diagram diagram, ArrayList<DiagramObject> selectedItems, Graphics2D g) {
+        for(DiagramObject item : diagram.getItems()) {
+            drawItem(camera, item, selectedItems, g);
+            resetColorAndStroke(g);
+        }
+    }
+    
+    public static void drawItem(Coordinate camera, DiagramObject item, ArrayList<DiagramObject> selectedItems, Graphics2D g2d) {
         //get the component location relative to the camera
         Coordinate screenCoord = item.getLocation().onScreen(camera);
+        
+        if(selectedItems.contains(item)) {
+                g2d.setColor(SELECTED_ITEM_DRAW_COLOR);
+                g2d.setStroke(SELECTED_ITEM_STROKE);
+        } 
         
         if(item instanceof Connector connector) {
             drawConnector(screenCoord, connector, g2d);
@@ -43,6 +70,10 @@ public class Artist {
         g2d.drawString(componentText, 
                 textX, //center the text under the component
                 screenCoord.getY() + item.getHeight() + g2d.getFontMetrics().getHeight());
+        
+        for(DiagramObject child : item.getChildren())
+            drawItem(camera, child, selectedItems, g2d);
+
     }
     
     public static void drawConnector(Coordinate relativeCoordinate, Connector connector, Graphics2D g) {

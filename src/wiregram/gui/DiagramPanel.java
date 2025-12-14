@@ -43,15 +43,7 @@ public class DiagramPanel extends javax.swing.JPanel {
     }
     
     
-    public static final Color DEFAULT_DRAW_COLOR = Color.BLACK;
-    public static final Stroke DEFAULT_STROKE = new BasicStroke(1);
-    private void resetColorAndStroke(Graphics2D g) { 
-        g.setColor(DEFAULT_DRAW_COLOR); 
-        g.setStroke(DEFAULT_STROKE); 
-    }
-    
-    public static final Color SELECTED_ITEM_DRAW_COLOR = Color.GREEN;
-    public static final Stroke SELECTED_ITEM_STROKE = new BasicStroke(2);
+
     
     @Override
     public void paint(Graphics g) {
@@ -59,19 +51,19 @@ public class DiagramPanel extends javax.swing.JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        resetColorAndStroke(g2d);
-
-        for(DiagramObject item : diagram.getItems()) {
+        /*for(DiagramObject item : diagram.getItems()) {
             
             if(selectionManager.isSelected(item)) {
                 g2d.setColor(SELECTED_ITEM_DRAW_COLOR);
                 g2d.setStroke(SELECTED_ITEM_STROKE);
             }
             
-            Artist.drawDiagramItem(cameraPosition, item, g2d);
+            Artist.drawItem(cameraPosition, item, g2d);
             
             resetColorAndStroke(g2d);
-        }
+        }*/
+        
+        Artist.draw(cameraPosition, diagram, selectionManager.getSelectedItems(), g2d);
         
         switch (getDragMode()) {
 
