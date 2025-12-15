@@ -17,14 +17,29 @@ import model.SelectionManager;
  *
  * @author scyth
  */
-public class DiagramItemsList extends javax.swing.JPanel implements SelectionManager.SelectionListener {
+public class DiagramItemsList extends javax.swing.JPanel implements SelectionManager.SelectionListener, Diagram.ItemsListener {
+    
+    private final DefaultListModel<DiagramObject> itemsListModel = new DefaultListModel<>();
     
     private Diagram diagram;
     public Diagram getDiagram() {
         return diagram;
     }
     public void setDiagram(Diagram diagram) {
+        if(this.diagram != null) {
+            this.diagram.getSelectionManager().removeSelectionListener(this);
+            this.diagram.removeItemsListener(this);
+        }
+        
         this.diagram = diagram;
+        
+        if(this.diagram != null) {
+            this.diagram.getSelectionManager().addSelectionListener(this);
+            this.diagram.addItemsListener(this);
+            itemsListModel.clear();
+            itemsListModel.addAll(getDiagram().getItems());
+            itemsList.setModel(itemsListModel);
+        }
     }
     
     /**
@@ -33,16 +48,31 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
     public DiagramItemsList() {
         initComponents();
     }
+
+    @Override
+    public void itemAdded(DiagramObject item) {
+        itemsListModel.addElement(item);
+    }
+
+    @Override
+    public void itemRemoved(DiagramObject removed) {
+        itemsListModel.removeElement(removed);
+    }
+    
+    
     
     @Override
     public void selectionUpdated(ArrayList<DiagramObject> selectedItems) {
-        ArrayList<DiagramObject> items;
-        if(!selectedItems.isEmpty())
-            items = selectedItems;
-        else
-            items = getDiagram().getItems();
         
-        itemsList.setModel(new DiagramListModel(items));
+        if(isListSelectionChanging)
+            return;
+        
+        int[] indices = new int[selectedItems.size()];
+        
+        for(int i = 0; i < selectedItems.size(); i++)
+            indices[i] = (itemsListModel.indexOf(selectedItems.get(i)));
+        
+        itemsList.setSelectedIndices(indices);
     }
     
     public void addListSelectionListener(ListSelectionListener l) { 
@@ -51,31 +81,6 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
     
     public void removeListSelectionListener(ListSelectionListener l) {
         itemsList.removeListSelectionListener(l);
-    }
-    
-        /**
-     * Manages the List<DiagramObject> logic
-     * @param <DiagramObject> 
-     */
-    private class DiagramListModel<DiagramObject> extends AbstractListModel<DiagramObject> {
-
-        private ArrayList<DiagramObject> items = new ArrayList<>();
-        public ArrayList<DiagramObject> getItems() { return items; }
-        
-        public DiagramListModel(ArrayList<DiagramObject> list) {
-            items = list;
-        }
-        
-        @Override
-        public int getSize() {
-            return getItems().size();
-        }
-
-        @Override
-        public DiagramObject getElementAt(int index) {
-            return (DiagramObject)getItems().get(index);
-        }
-        
     }
 
     /**
@@ -89,13 +94,7 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
 
         jScrollPane2 = new javax.swing.JScrollPane();
         itemsList = new javax.swing.JList<>();
-        itemsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        itemsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         itemsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 itemsListValueChanged(evt);
@@ -109,7 +108,7 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -121,13 +120,34 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * When the user selects or deselects DiagramObjects (items)
+     * on the JList, this flag is used to prevent a feedback loop between here
+     * and the diagram's selection events as we process selections and deselections
+     */
+    private boolean isListSelectionChanging = false;
+    
     private void itemsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_itemsListValueChanged
-        //evt.get
+        if(evt.getValueIsAdjusting() == false) {
+            
+            //avoid the feedback loop in diagram SelectionManager dishing out
+            //events in response to selections & deselections
+            isListSelectionChanging = true;
+            
+            var selectedItems = itemsList.getSelectedValuesList();
+            for(DiagramObject item : getDiagram().getItems())
+                if(!selectedItems.contains(item))
+                    getDiagram().getSelectionManager().setSelected(item, false);
+                else
+                    getDiagram().setSelected(item, true);
+            
+            isListSelectionChanging = false;
+        }
     }//GEN-LAST:event_itemsListValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> itemsList;
+    private javax.swing.JList<DiagramObject> itemsList;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 

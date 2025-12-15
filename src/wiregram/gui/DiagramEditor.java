@@ -115,22 +115,26 @@ public class DiagramEditor extends javax.swing.JPanel {
         btnAddConnector = new javax.swing.JButton();
         diagramItemsList1 = new wiregram.gui.DiagramItemsList();
 
+        setLayout(new java.awt.BorderLayout());
+
         diagramPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout diagramPanelLayout = new javax.swing.GroupLayout(diagramPanel);
         diagramPanel.setLayout(diagramPanelLayout);
         diagramPanelLayout.setHorizontalGroup(
             diagramPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 218, Short.MAX_VALUE)
+            .addGap(0, 275, Short.MAX_VALUE)
         );
         diagramPanelLayout.setVerticalGroup(
             diagramPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 443, Short.MAX_VALUE)
         );
 
-        diagramObjectEditor1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        add(diagramPanel, java.awt.BorderLayout.CENTER);
 
-        jToolBar1.setFloatable(true);
+        diagramObjectEditor1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        add(diagramObjectEditor1, java.awt.BorderLayout.EAST);
+
         jToolBar1.setRollover(true);
 
         btnAddComponent.setText("Add Component");
@@ -155,37 +159,10 @@ public class DiagramEditor extends javax.swing.JPanel {
         });
         jToolBar1.add(btnAddConnector);
 
-        diagramItemsList1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        add(jToolBar1, java.awt.BorderLayout.NORTH);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(diagramItemsList1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(diagramPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(diagramObjectEditor1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(diagramPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(diagramObjectEditor1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(diagramItemsList1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        diagramItemsList1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        add(diagramItemsList1, java.awt.BorderLayout.WEST);
     }// </editor-fold>//GEN-END:initComponents
 
     //number used for "new_component_X" value
