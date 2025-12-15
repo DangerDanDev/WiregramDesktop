@@ -31,6 +31,8 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
     public void setPrimaryItem(DiagramObject item) {
         this.primaryItem = item;
         
+        setVisible(primaryItem != null);
+        
         if(item != null) {
             tfName.setText(item.getName());
             tfRefDes.setText(item.getRefDes());
@@ -40,16 +42,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
             height.setValue(item.getHeight());
             
             cbSelectedItems.setSelectedItem(item);
-        } else {
-            tfName.setText("");
-            tfRefDes.setText("");
-            locationX.setValue(0);
-            locationY.setValue(0);
-            width.setValue(0);
-            height.setValue(0);
         }
-        
-        setEnabled(item != null);
     }
     public DiagramObject getPrimaryItem() { return this.primaryItem; }
     public void pushChangesToPrimaryItem() {

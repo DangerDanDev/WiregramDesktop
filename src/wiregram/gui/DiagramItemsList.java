@@ -64,7 +64,7 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
     @Override
     public void selectionUpdated(ArrayList<DiagramObject> selectedItems) {
         
-        if(isListSelectionChanging)
+        if(pauseSelectionChangeEvents)
             return;
         
         int[] indices = new int[selectedItems.size()];
@@ -125,14 +125,14 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
      * on the JList, this flag is used to prevent a feedback loop between here
      * and the diagram's selection events as we process selections and deselections
      */
-    private boolean isListSelectionChanging = false;
+    private boolean pauseSelectionChangeEvents = false;
     
     private void itemsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_itemsListValueChanged
         if(evt.getValueIsAdjusting() == false) {
             
             //avoid the feedback loop in diagram SelectionManager dishing out
             //events in response to selections & deselections
-            isListSelectionChanging = true;
+            pauseSelectionChangeEvents = true;
             
             var selectedItems = itemsList.getSelectedValuesList();
             for(DiagramObject item : getDiagram().getItems())
@@ -141,7 +141,7 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
                 else
                     getDiagram().setSelected(item, true);
             
-            isListSelectionChanging = false;
+            pauseSelectionChangeEvents = false;
         }
     }//GEN-LAST:event_itemsListValueChanged
 
