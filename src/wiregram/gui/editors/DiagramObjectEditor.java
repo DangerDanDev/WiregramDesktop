@@ -24,9 +24,9 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
         initComponents();
     }
 
-    private DiagramObject item;
-    public void setItem(DiagramObject item) {
-        this.item = item;
+    private DiagramObject primaryItem;
+    public void setPrimaryItem(DiagramObject item) {
+        this.primaryItem = item;
         
         if(item != null) {
             tfName.setText(item.getName());
@@ -48,12 +48,12 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
         
         setEnabled(item != null);
     }
-    public DiagramObject getItem() { return this.item; }
-    public void pushChangesToItem() {
-        getItem().setName(tfName.getText());
-        getItem().setRefDes(tfRefDes.getText());
-        getItem().setLocation((int)locationX.getValue(), (int)locationY.getValue());
-        getItem().setSize((int)width.getValue(), (int)height.getValue());
+    public DiagramObject getPrimaryItem() { return this.primaryItem; }
+    public void pushChangesToPrimaryItem() {
+        getPrimaryItem().setName(tfName.getText());
+        getPrimaryItem().setRefDes(tfRefDes.getText());
+        getPrimaryItem().setLocation((int)locationX.getValue(), (int)locationY.getValue());
+        getPrimaryItem().setSize((int)width.getValue(), (int)height.getValue());
         
         System.out.println("updating stuff");
         
@@ -67,10 +67,10 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
         model.removeAllElements();
         
         if(selectedItems.isEmpty()) 
-            setItem(null);
+            setPrimaryItem(null);
         else {
             model.addAll(selectedItems);
-            setItem(selectedItems.getFirst());
+            setPrimaryItem(selectedItems.getFirst());
         }
     }
 
@@ -211,11 +211,11 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        pushChangesToItem();
+        pushChangesToPrimaryItem();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void cbSelectedItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSelectedItemsActionPerformed
-        setItem((DiagramObject)cbSelectedItems.getSelectedItem());
+        setPrimaryItem((DiagramObject)cbSelectedItems.getSelectedItem());
     }//GEN-LAST:event_cbSelectedItemsActionPerformed
 
 
