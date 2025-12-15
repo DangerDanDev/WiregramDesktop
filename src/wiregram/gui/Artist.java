@@ -35,18 +35,21 @@ public class Artist {
     public static final Color SELECTED_ITEM_DRAW_COLOR = Color.GREEN;
     public static final Stroke SELECTED_ITEM_STROKE = new BasicStroke(2);
     
-    public static void draw(Coordinate camera, Diagram diagram, ArrayList<DiagramObject> selectedItems, Graphics2D g) {
+    public static void draw(Coordinate camera, Diagram diagram, Graphics2D g) {
         for(DiagramObject item : diagram.getItems()) {
-            drawItem(camera, item, selectedItems, g);
+            
+            boolean isSelected = diagram.getSelectionManager().isSelected(item);
+            
+            drawItem(camera, item, isSelected, g);
             resetColorAndStroke(g);
         }
     }
     
-    public static void drawItem(Coordinate camera, DiagramObject item, ArrayList<DiagramObject> selectedItems, Graphics2D g2d) {
+    public static void drawItem(Coordinate camera, DiagramObject item, boolean isSelected, Graphics2D g2d) {
         //get the component location relative to the camera
         Coordinate screenCoord = item.getLocation().onScreen(camera);
         
-        if(selectedItems.contains(item)) {
+        if(isSelected) {
                 g2d.setColor(SELECTED_ITEM_DRAW_COLOR);
                 g2d.setStroke(SELECTED_ITEM_STROKE);
         } 
@@ -72,7 +75,7 @@ public class Artist {
                 screenCoord.getY() + item.getHeight() + g2d.getFontMetrics().getHeight());
         
         for(DiagramObject child : item.getChildren())
-            drawItem(camera, child, selectedItems, g2d);
+            drawItem(camera, child, isSelected, g2d);
 
     }
     

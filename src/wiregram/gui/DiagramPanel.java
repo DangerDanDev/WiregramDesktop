@@ -50,20 +50,8 @@ public class DiagramPanel extends javax.swing.JPanel {
         super.paint(g);
 
         Graphics2D g2d = (Graphics2D) g;
-
-        /*for(DiagramObject item : diagram.getItems()) {
-            
-            if(selectionManager.isSelected(item)) {
-                g2d.setColor(SELECTED_ITEM_DRAW_COLOR);
-                g2d.setStroke(SELECTED_ITEM_STROKE);
-            }
-            
-            Artist.drawItem(cameraPosition, item, g2d);
-            
-            resetColorAndStroke(g2d);
-        }*/
         
-        Artist.draw(cameraPosition, diagram, selectionManager.getSelectedItems(), g2d);
+        Artist.draw(cameraPosition, diagram, g2d);
         
         switch (getDragMode()) {
 
@@ -73,7 +61,6 @@ public class DiagramPanel extends javax.swing.JPanel {
         }
     }
     
-    private SelectionManager selectionManager = new SelectionManager();
     private Coordinate mousePressStart = new Coordinate(), mousePressEnd = new Coordinate();
     private Rect getSelectionBox() { return new Rect(mousePressStart, mousePressEnd); }
     private DragMode dragMode = DragMode.None;
@@ -141,13 +128,13 @@ public class DiagramPanel extends javax.swing.JPanel {
 
                 case DragMode.SelectionBox -> {
                     if(!e.isControlDown() && !e.isShiftDown())
-                        selectionManager.deselectAll();
+                        diagram.deselectAll();
                     
                     //to avoid jitter select, we require the selection box be a minimum size (1 pixel)
                     if(mousePressStart.distance(mousePressEnd) >= 1) {
                         ArrayList<DiagramObject> selectedItems = diagram.selectByRect(cameraPosition, getSelectionBox());
                         for(DiagramObject item : selectedItems) 
-                            selectionManager.setSelected(item, true);
+                            diagram.setSelected(item, true);
                     }
                 }
                 default -> {}
@@ -166,11 +153,11 @@ public class DiagramPanel extends javax.swing.JPanel {
                 case MouseEvent.BUTTON1 -> {
                     //must hold control or shift to select multiple items
                     if(!e.isControlDown() && !e.isShiftDown())
-                        selectionManager.deselectAll();
+                        diagram.deselectAll();
 
                     DiagramObject newlySelected = diagram.selectItemAt(cameraPosition, e.getX(), e.getY());
                     if(newlySelected != null)
-                        selectionManager.toggleSelected(newlySelected);
+                        diagram.toggleSelected(newlySelected);
 
                     revalidate();
                     repaint();
