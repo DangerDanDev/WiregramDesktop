@@ -108,11 +108,9 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         locationX = new javax.swing.JSpinner();
-        jLabel5 = new javax.swing.JLabel();
         locationY = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
         width = new javax.swing.JSpinner();
-        jLabel6 = new javax.swing.JLabel();
         height = new javax.swing.JSpinner();
         btnSave = new javax.swing.JButton();
         cbSelectedItems = new javax.swing.JComboBox<>();
@@ -136,22 +134,16 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
 
         jLabel2.setText("RefDes: ");
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 4));
+        jPanel1.setLayout(new java.awt.GridLayout(2, 3));
 
-        jLabel3.setText("X:");
+        jLabel3.setText("Location: ");
         jPanel1.add(jLabel3);
         jPanel1.add(locationX);
-
-        jLabel5.setText("Y:");
-        jPanel1.add(jLabel5);
         jPanel1.add(locationY);
 
-        jLabel4.setText("Width:");
+        jLabel4.setText("Size:");
         jPanel1.add(jLabel4);
         jPanel1.add(width);
-
-        jLabel6.setText("Height:");
-        jPanel1.add(jLabel6);
         jPanel1.add(height);
 
         btnSave.setText("Save");
@@ -225,8 +217,6 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner locationX;
