@@ -52,7 +52,7 @@ public class DiagramEditor extends javax.swing.JPanel {
         diagram.add(BCCU);
         
         Component battery28 = new Component(diagram, "28 Batt", "2180B2");
-        battery28.setLocation(BCCU.getRect().getRightBound() + 200, BCCU.getY());
+        battery28.setLocation(BCCU.getRightBound() + 200, BCCU.getY());
         diagram.add(battery28);
         
         Component EDU1 = new Component(diagram, "EDU1", "2220B1");
