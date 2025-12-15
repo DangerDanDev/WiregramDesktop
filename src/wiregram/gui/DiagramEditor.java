@@ -104,15 +104,10 @@ public class DiagramEditor extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        componentsList = new javax.swing.JList<>();
         diagramPanel = new wiregram.gui.DiagramPanel();
         diagramObjectEditor1 = new wiregram.gui.editors.DiagramObjectEditor();
-
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        componentsList.setModel(new DiagramListModel());
-        jScrollPane1.setViewportView(componentsList);
+        jToolBar1 = new javax.swing.JToolBar();
+        btnAddComponent = new javax.swing.JButton();
 
         diagramPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -120,7 +115,7 @@ public class DiagramEditor extends javax.swing.JPanel {
         diagramPanel.setLayout(diagramPanelLayout);
         diagramPanelLayout.setHorizontalGroup(
             diagramPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 206, Short.MAX_VALUE)
+            .addGap(0, 417, Short.MAX_VALUE)
         );
         diagramPanelLayout.setVerticalGroup(
             diagramPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,36 +124,59 @@ public class DiagramEditor extends javax.swing.JPanel {
 
         diagramObjectEditor1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jToolBar1.setFloatable(true);
+        jToolBar1.setRollover(true);
+
+        btnAddComponent.setText("Add Component");
+        btnAddComponent.setFocusable(false);
+        btnAddComponent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAddComponent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAddComponent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddComponentActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAddComponent);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(diagramPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(diagramObjectEditor1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(diagramPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(diagramObjectEditor1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(diagramPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                    .addComponent(diagramObjectEditor1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(diagramPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(diagramObjectEditor1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //number used for "new_component_X" value
+    private int newComponentIndex = 1;
+    private void btnAddComponentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddComponentActionPerformed
+        getDiagram().add(new Component(getDiagram(), "new_component" + newComponentIndex, "ref-des" + newComponentIndex++));
+        repaint();
+    }//GEN-LAST:event_btnAddComponentActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> componentsList;
+    private javax.swing.JButton btnAddComponent;
     private wiregram.gui.editors.DiagramObjectEditor diagramObjectEditor1;
     private wiregram.gui.DiagramPanel diagramPanel;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
