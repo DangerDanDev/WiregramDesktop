@@ -10,6 +10,7 @@ import model.Connector;
 import model.Diagram;
 import model.DiagramObject;
 import model.Pin;
+import model.SelectionManager;
 
 /**
  *
@@ -45,36 +46,36 @@ public class DiagramEditor extends javax.swing.JPanel {
      * Inserts example data for testing phase stuff
      */
     private void initFakeData() {
-        Component BCCU = new Component(diagram, "28 BCCU", "2180B1");
+        Component BCCU = new Component("28 BCCU", "2180B1");
         BCCU.setLocation(50, 150);
         BCCU.setHeight(200);
         BCCU.setWidth(100);
         diagram.add(BCCU);
         
-        Component battery28 = new Component(diagram, "28 Batt", "2180B2");
+        Component battery28 = new Component("28 Batt", "2180B2");
         battery28.setLocation(BCCU.getRightBound() + 200, BCCU.getY());
         diagram.add(battery28);
         
-        Component EDU1 = new Component(diagram, "EDU1", "2220B1");
+        Component EDU1 = new Component("EDU1", "2220B1");
         EDU1.setLocation(battery28.getX(), 0);
         diagram.add(EDU1);
 
-        Component wow_switch = new Component(diagram, "WOW SWITCH", "32B15");
+        Component wow_switch = new Component("WOW SWITCH", "32B15");
         wow_switch.setLocation(100, 50);
         diagram.add(wow_switch);
         
-        Connector bccu_plug = new Connector(diagram, "J1/P1");
+        Connector bccu_plug = new Connector("J1/P1");
         bccu_plug.setRefDes("J1/P1");
         bccu_plug.setParentOffset(BCCU.getWidth(), 0);
         BCCU.addChild(bccu_plug);
         //bccu_plug.setParent(BCCU);
         //diagram.add(bccu_plug);
         
-        bccu_plug.addChild(new Pin(diagram, "A"));
-        bccu_plug.addChild(new Pin(diagram, "B"));
-        bccu_plug.addChild(new Pin(diagram, "C"));
-        bccu_plug.addChild(new Pin(diagram, "D"));
-        bccu_plug.addChild(new Pin(diagram, "E"));
+        bccu_plug.addChild(new Pin("A"));
+        bccu_plug.addChild(new Pin("B"));
+        bccu_plug.addChild(new Pin("C"));
+        bccu_plug.addChild(new Pin("D"));
+        bccu_plug.addChild(new Pin("E"));
     }
     
     /**
@@ -108,6 +109,7 @@ public class DiagramEditor extends javax.swing.JPanel {
         diagramObjectEditor1 = new wiregram.gui.editors.DiagramObjectEditor();
         jToolBar1 = new javax.swing.JToolBar();
         btnAddComponent = new javax.swing.JButton();
+        btnAddConnector = new javax.swing.JButton();
 
         diagramPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -137,6 +139,17 @@ public class DiagramEditor extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(btnAddComponent);
+
+        btnAddConnector.setText("Add Connector");
+        btnAddConnector.setFocusable(false);
+        btnAddConnector.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAddConnector.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAddConnector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddConnectorActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAddConnector);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -168,13 +181,23 @@ public class DiagramEditor extends javax.swing.JPanel {
     //number used for "new_component_X" value
     private int newComponentIndex = 1;
     private void btnAddComponentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddComponentActionPerformed
-        getDiagram().add(new Component(getDiagram(), "new_component" + newComponentIndex, "ref-des" + newComponentIndex++));
+        getDiagram().add(new Component("new_component" + newComponentIndex, "ref-des" + newComponentIndex++));
         repaint();
     }//GEN-LAST:event_btnAddComponentActionPerformed
+
+    private void btnAddConnectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddConnectorActionPerformed
+        DiagramObject primarySelectedItem = diagramObjectEditor1.getPrimaryItem();
+        Connector connector = new Connector("new_component" + newComponentIndex++);
+        
+        primarySelectedItem.addChild(connector);
+        connector.setParentOffset(primarySelectedItem.getWidth(), Component.CONNECTOR_SPACING);
+        repaint();
+    }//GEN-LAST:event_btnAddConnectorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddComponent;
+    private javax.swing.JButton btnAddConnector;
     private wiregram.gui.editors.DiagramObjectEditor diagramObjectEditor1;
     private wiregram.gui.DiagramPanel diagramPanel;
     private javax.swing.JToolBar jToolBar1;
