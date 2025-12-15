@@ -21,7 +21,7 @@ public class Wiregram {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         frame.setContentPane(new DiagramEditor());
-        frame.setSize(1280,1024);
+        frame.setSize(1024,768);
         frame.setVisible(true);
     }
     

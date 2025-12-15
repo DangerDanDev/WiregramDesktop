@@ -22,16 +22,19 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="diagramPanel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="diagramObjectEditor1" min="-2" pref="204" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="diagramPanel" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" pref="423" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="diagramPanel" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="1" pref="423" max="32767" attributes="0"/>
+                  <Component id="diagramObjectEditor1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -63,7 +66,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="399" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="210" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -73,5 +76,10 @@
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="wiregram.gui.editors.DiagramObjectEditor" name="diagramObjectEditor1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="diagram.getSelectionManager().addSelectionListener(diagramObjectEditor1);&#xd;&#xa; "/>
+      </AuxValues>
+    </Component>
   </SubComponents>
 </Form>
