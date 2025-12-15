@@ -12,13 +12,13 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.DiagramObject;
-import model.SelectionManager.SelectionListener;
+import model.ListEventManager;
 
 /**
  *
  * @author scyth
  */
-public class DiagramObjectEditor extends javax.swing.JPanel implements SelectionListener, ListSelectionListener {
+public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelectionListener, ListEventManager.ListListener<DiagramObject> {
 
     /**
      * Creates new form DiagramObjectEditor
@@ -56,9 +56,9 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
         getParent().revalidate();
         getParent().repaint();
     }
+
     @Override
-    public void selectionUpdated(ArrayList<DiagramObject> selectedItems) {
-        
+    public void listUpdated(ArrayList<DiagramObject> selectedItems) {
         DefaultComboBoxModel model = (DefaultComboBoxModel<DiagramObject>)cbSelectedItems.getModel();
         model.removeAllElements();
         
@@ -69,6 +69,8 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
             setPrimaryItem(selectedItems.getFirst());
         }
     }
+    
+    
 
     
     @Override

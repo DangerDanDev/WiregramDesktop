@@ -11,13 +11,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import model.Diagram;
 import model.DiagramObject;
+import model.ListEventManager;
 import model.SelectionManager;
 
 /**
  *
  * @author scyth
  */
-public class DiagramItemsList extends javax.swing.JPanel implements SelectionManager.SelectionListener, Diagram.ItemsListener {
+public class DiagramItemsList extends javax.swing.JPanel implements Diagram.ItemsListener, ListEventManager.ListListener<DiagramObject> {
     
     private final DefaultListModel<DiagramObject> itemsListModel = new DefaultListModel<>();
     
@@ -27,14 +28,14 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
     }
     public void setDiagram(Diagram diagram) {
         if(this.diagram != null) {
-            this.diagram.getSelectionManager().removeSelectionListener(this);
+            this.diagram.getSelectionManager().removeListener(this);
             this.diagram.removeItemsListener(this);
         }
         
         this.diagram = diagram;
         
         if(this.diagram != null) {
-            this.diagram.getSelectionManager().addSelectionListener(this);
+            this.diagram.getSelectionManager().addListener(this);
             this.diagram.addItemsListener(this);
             itemsListModel.clear();
             itemsListModel.addAll(getDiagram().getItems());
@@ -62,7 +63,7 @@ public class DiagramItemsList extends javax.swing.JPanel implements SelectionMan
     
     
     @Override
-    public void selectionUpdated(ArrayList<DiagramObject> selectedItems) {
+    public void listUpdated(ArrayList<DiagramObject> selectedItems) {
         
         if(pauseSelectionChangeEvents)
             return;

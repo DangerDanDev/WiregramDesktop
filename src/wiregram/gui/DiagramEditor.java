@@ -20,14 +20,14 @@ public class DiagramEditor extends javax.swing.JPanel {
     private Diagram diagram;
     public final void setDiagram(Diagram diagram){ 
         if(this.diagram != null)
-            getDiagram().getSelectionManager().removeSelectionListener(diagramObjectEditor1);
+            getDiagram().getSelectionManager().addListener(diagramObjectEditor1);
         
         this.diagram = diagram; 
         diagramPanel.setDiagram(getDiagram());
         diagramItemsList1.setDiagram(getDiagram());
         
         if(this.diagram != null)
-            getDiagram().getSelectionManager().addSelectionListener(diagramObjectEditor1);
+            getDiagram().getSelectionManager().addListener(diagramObjectEditor1);
     }
     public final Diagram getDiagram() { return this.diagram; }
     
@@ -38,7 +38,7 @@ public class DiagramEditor extends javax.swing.JPanel {
         initComponents();
         
         setDiagram(new Diagram());
-        getDiagram().getSelectionManager().addSelectionListener(diagramItemsList1);
+        getDiagram().getSelectionManager().addListener(diagramItemsList1);
         
         diagramItemsList1.addListSelectionListener(diagramObjectEditor1);
         
