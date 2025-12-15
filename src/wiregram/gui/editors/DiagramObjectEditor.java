@@ -7,7 +7,10 @@ package wiregram.gui.editors;
 import java.util.ArrayList;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import model.DiagramObject;
 import model.SelectionManager.SelectionListener;
 
@@ -15,7 +18,7 @@ import model.SelectionManager.SelectionListener;
  *
  * @author scyth
  */
-public class DiagramObjectEditor extends javax.swing.JPanel implements SelectionListener {
+public class DiagramObjectEditor extends javax.swing.JPanel implements SelectionListener, ListSelectionListener {
 
     /**
      * Creates new form DiagramObjectEditor
@@ -88,6 +91,14 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements Selection
         
         super.setEnabled(enabled);
     }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        JList source = (JList)e.getSource();
+        setPrimaryItem((DiagramObject)source.getSelectedValue());
+    }
+    
+    
     
     
     /**
