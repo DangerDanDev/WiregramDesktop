@@ -96,25 +96,35 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-        <Property name="columns" type="int" value="3"/>
+        <Property name="columns" type="int" value="4"/>
         <Property name="rows" type="int" value="2"/>
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Location: "/>
+            <Property name="text" type="java.lang.String" value="X:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="locationX">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Y:"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="locationY">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Size:"/>
+            <Property name="text" type="java.lang.String" value="Width:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="width">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel6">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Height:"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="height">
         </Component>
