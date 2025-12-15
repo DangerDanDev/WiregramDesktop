@@ -101,19 +101,25 @@ public class DiagramEditor extends javax.swing.JPanel {
         diagramObjectEditor1 = new wiregram.gui.editors.DiagramObjectEditor();
         diagram.getSelectionManager().addSelectionListener(diagramObjectEditor1);
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         componentsList.setModel(new DiagramListModel());
         jScrollPane1.setViewportView(componentsList);
+
+        diagramPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout diagramPanelLayout = new javax.swing.GroupLayout(diagramPanel);
         diagramPanel.setLayout(diagramPanelLayout);
         diagramPanelLayout.setHorizontalGroup(
             diagramPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
+            .addGap(0, 206, Short.MAX_VALUE)
         );
         diagramPanelLayout.setVerticalGroup(
             diagramPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        diagramObjectEditor1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
