@@ -17,8 +17,17 @@ import model.Pin;
  */
 public class DiagramEditor extends javax.swing.JPanel {
 
-    private Diagram diagram = new Diagram();
-    public void setDiagram(Diagram diagram){ this.diagram = diagram; }
+    private Diagram diagram;
+    public final void setDiagram(Diagram diagram){ 
+        if(this.diagram != null)
+            getDiagram().getSelectionManager().removeSelectionListener(diagramObjectEditor1);
+        
+        this.diagram = diagram; 
+        diagramPanel.setDiagram(getDiagram());
+        
+        if(this.diagram != null)
+            getDiagram().getSelectionManager().addSelectionListener(diagramObjectEditor1);
+    }
     public final Diagram getDiagram() { return this.diagram; }
     
     /**
@@ -27,7 +36,7 @@ public class DiagramEditor extends javax.swing.JPanel {
     public DiagramEditor() {
         initComponents();
         
-        diagramPanel.setDiagram(getDiagram());
+        setDiagram(new Diagram());
         
         initFakeData();
     }
@@ -99,7 +108,6 @@ public class DiagramEditor extends javax.swing.JPanel {
         componentsList = new javax.swing.JList<>();
         diagramPanel = new wiregram.gui.DiagramPanel();
         diagramObjectEditor1 = new wiregram.gui.editors.DiagramObjectEditor();
-        diagram.getSelectionManager().addSelectionListener(diagramObjectEditor1);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

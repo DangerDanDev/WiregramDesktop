@@ -98,9 +98,6 @@
           </Border>
         </Property>
       </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="diagram.getSelectionManager().addSelectionListener(diagramObjectEditor1);&#xd;&#xa; "/>
-      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
