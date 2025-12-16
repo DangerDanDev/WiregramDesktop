@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.DiagramObject;
 import model.ListEventManager;
+import wiregram.gui.DiagramObjectChildrenTreeModel;
 
 /**
  *
@@ -36,8 +37,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         
         setVisible(this.primaryItem != null);
         
-        DefaultListModel<DiagramObject> listModel = new DefaultListModel<>();
-        jList1.setModel(listModel);
+        refreshChildList();
         
         if(item != null) {
             tfName.setText(item.getName());
@@ -48,18 +48,25 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             height.setValue(item.getHeight());
             
             cbPrimaryItem.setSelectedItem(item);
-            
-            
-            //listModel.addAll(primaryItem.getChildren());
+        } 
+    }
+
+    private void refreshChildList() {
+        DefaultListModel<DiagramObject> listModel = new DefaultListModel<>();
+        
+        if(getPrimaryItem() != null) {
             for(DiagramObject child : primaryItem.getChildren()) {
                 listModel.addElement(child);
                 for (DiagramObject grandchild : child.getChildren()) {
                     listModel.addElement(grandchild);
                 }
             }
-        } 
+            
+            jTree1.setModel(new DiagramObjectChildrenTreeModel(getPrimaryItem()));
+        }
         
-        
+        //jList1.setModel(listModel);
+        //jTree1.setModel(new DiagramTreeModel(getPrimaryItem().getChildren()));
     }
     
     public DiagramObject getPrimaryItem() { return this.primaryItem; }
@@ -133,8 +140,8 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         height = new javax.swing.JSpinner();
         btnSave = new javax.swing.JButton();
         cbPrimaryItem = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -191,7 +198,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             }
         });
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane2.setViewportView(jTree1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -200,7 +207,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -232,7 +239,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -256,10 +263,10 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JList<DiagramObject> jList1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTree jTree1;
     private javax.swing.JSpinner locationX;
     private javax.swing.JSpinner locationY;
     private javax.swing.JTextField tfName;
