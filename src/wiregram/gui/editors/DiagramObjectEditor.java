@@ -61,8 +61,6 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
                     listModel.addElement(grandchild);
                 }
             }
-            
-            jTree1.setModel(new DiagramObjectChildrenTreeModel(getPrimaryItem()));
         }
         
         //jList1.setModel(listModel);
@@ -88,10 +86,11 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         model.removeAllElements();
         
         if(selectedItems == null || selectedItems.isEmpty()) 
-            setPrimaryItem(null);
+        setPrimaryItem(null);
         else {
             model.addAll(selectedItems);
             setPrimaryItem(selectedItems.getFirst());
+            selectedItemsTree.setModel(new DiagramObjectChildrenTreeModel("Selection", selectedItems));
         }
     }
     
@@ -141,7 +140,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         btnSave = new javax.swing.JButton();
         cbPrimaryItem = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        selectedItemsTree = new javax.swing.JTree();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -198,7 +197,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             }
         });
 
-        jScrollPane2.setViewportView(jTree1);
+        jScrollPane2.setViewportView(selectedItemsTree);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -266,9 +265,9 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTree jTree1;
     private javax.swing.JSpinner locationX;
     private javax.swing.JSpinner locationY;
+    private javax.swing.JTree selectedItemsTree;
     private javax.swing.JTextField tfName;
     private javax.swing.JTextField tfRefDes;
     private javax.swing.JSpinner width;

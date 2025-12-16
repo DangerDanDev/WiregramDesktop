@@ -19,40 +19,53 @@ import model.Pin;
  */
 public class DiagramObjectChildrenTreeModel implements TreeModel{
     
-    private DiagramObject primaryItem;
-    public DiagramObject getPrimaryItem() {
-        return primaryItem;
+    private ArrayList<DiagramObject> parents;
+    public ArrayList<DiagramObject> getParents() {
+        return parents;
     }
-    public final void setPrimaryItem(DiagramObject parent) {
-        this.primaryItem = parent;
+    public final void setParents(ArrayList<DiagramObject> parents) {
+        this.parents = parents;
     }
     
-    public DiagramObjectChildrenTreeModel(DiagramObject parent) {
-        setPrimaryItem(parent);
+    private final Object root;
+    
+    public DiagramObjectChildrenTreeModel(Object root, ArrayList<DiagramObject> parents) {
+        this.root = root;
+        setParents(parents);
     }
 
     @Override
     public Object getRoot() {
-        return primaryItem;
+        return root;
     }
 
     @Override
     public Object getChild(Object parent, int index) {
-        DiagramObject dobj_Parent = (DiagramObject) parent;
+        //root of the tree model is a stand-in, the real root is
+        //the ArrayList passed into the constructor
+        if(!(parent instanceof DiagramObject))
+            return parents.get(index);
         
+        DiagramObject dobj_Parent = (DiagramObject) parent;
         return dobj_Parent.getChildren().get(index);
     }
 
     @Override
     public int getChildCount(Object parent) {
-        DiagramObject dobj_Parent = (DiagramObject) parent;
+        if(!(parent instanceof DiagramObject))
+            return parents.size();
         
+        DiagramObject dobj_Parent = (DiagramObject) parent;
         return dobj_Parent.getChildren().size();
     }
 
     @Override
     public boolean isLeaf(Object node) {
-        return node instanceof Pin;
+        if(!(node instanceof DiagramObject))
+            return false;
+        
+        DiagramObject dobj_node = (DiagramObject) node;
+        return dobj_node.getChildren().isEmpty();
     }
 
     @Override
@@ -62,8 +75,10 @@ public class DiagramObjectChildrenTreeModel implements TreeModel{
 
     @Override
     public int getIndexOfChild(Object parent, Object child) {
-        DiagramObject dobj_Parent = (DiagramObject) parent;
+        if(!(parent instanceof DiagramObject))
+            return parents.indexOf(child);
         
+        DiagramObject dobj_Parent = (DiagramObject) parent;
         return dobj_Parent.getChildren().indexOf(child);
     }
 
@@ -75,8 +90,5 @@ public class DiagramObjectChildrenTreeModel implements TreeModel{
     @Override
     public void removeTreeModelListener(TreeModelListener l) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
-    
+    }    
 }
