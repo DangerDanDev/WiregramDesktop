@@ -57,7 +57,6 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
                     listModel.addElement(grandchild);
                 }
             }
-            
         } 
         
         
