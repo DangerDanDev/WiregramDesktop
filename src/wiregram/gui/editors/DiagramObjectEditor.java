@@ -62,9 +62,6 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
                 }
             }
         }
-        
-        //jList1.setModel(listModel);
-        //jTree1.setModel(new DiagramTreeModel(getPrimaryItem().getChildren()));
     }
     
     public DiagramObject getPrimaryItem() { return this.primaryItem; }
