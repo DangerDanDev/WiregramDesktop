@@ -80,24 +80,6 @@ public class DiagramEditor extends javax.swing.JPanel {
         bccu_plug.addChild(new Pin("D"));
         bccu_plug.addChild(new Pin("E"));
     }
-    
-    /**
-     * Manages the List<DiagramObject> logic
-     * @param <DiagramObject> 
-     */
-    private class DiagramListModel<DiagramObject> extends AbstractListModel<DiagramObject> {
-
-        @Override
-        public int getSize() {
-            return getDiagram().getItems().size();
-        }
-
-        @Override
-        public DiagramObject getElementAt(int index) {
-            return (DiagramObject)getDiagram().getItems().get(index);
-        }
-        
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
