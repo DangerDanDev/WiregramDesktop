@@ -4,6 +4,8 @@
  */
 package wiregram.gui.editors;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
@@ -43,6 +45,9 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             
             cbSelectedItems.setSelectedItem(item);
         }
+        
+        if(getChildControl() != null && getPrimaryItem() != null)
+            getChildControl().listUpdated(getPrimaryItem().getChildren());
     }
     public DiagramObject getPrimaryItem() { return this.primaryItem; }
     public void pushChangesToPrimaryItem() {
@@ -56,7 +61,20 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         getParent().revalidate();
         getParent().repaint();
     }
-
+    
+    private DiagramObjectEditor childControl;
+    public void setChildControl(DiagramObjectEditor control) {
+        this.childControl = control;
+    }
+    public DiagramObjectEditor getChildControl() { 
+        return this.childControl; 
+    }
+    
+    
+    /**
+     * Listens for changes in Diagram.SelectionManager's selected items list
+     * @param selectedItems 
+     */
     @Override
     public void listUpdated(ArrayList<DiagramObject> selectedItems) {
         DefaultComboBoxModel model = (DefaultComboBoxModel<DiagramObject>)cbSelectedItems.getModel();
@@ -69,9 +87,6 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             setPrimaryItem(selectedItems.getFirst());
         }
     }
-    
-    
-
     
     @Override
     public void setEnabled(boolean enabled) {
