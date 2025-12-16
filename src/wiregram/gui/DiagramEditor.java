@@ -26,6 +26,9 @@ public class DiagramEditor extends javax.swing.JPanel {
         diagramPanel.setDiagram(getDiagram());
         diagramItemsList1.setDiagram(getDiagram());
         
+        diagramObjectEditor1.setChildControl(diagramObjectEditor2);
+        diagramObjectEditor2.setChildControl(diagramObjectEditor3);
+        
         if(this.diagram != null)
             getDiagram().getSelectionManager().addListener(diagramObjectEditor1);
     }
@@ -90,19 +93,17 @@ public class DiagramEditor extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        diagramPanel = new wiregram.gui.DiagramPanel();
         jPanel1 = new javax.swing.JPanel();
         diagramObjectEditor1 = new wiregram.gui.editors.DiagramObjectEditor();
         diagramObjectEditor2 = new wiregram.gui.editors.DiagramObjectEditor();
         diagramObjectEditor3 = new wiregram.gui.editors.DiagramObjectEditor();
+        diagramPanel = new wiregram.gui.DiagramPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnAddComponent = new javax.swing.JButton();
         btnAddConnector = new javax.swing.JButton();
         diagramItemsList1 = new wiregram.gui.DiagramItemsList();
 
         setLayout(new java.awt.BorderLayout());
-
-        diagramPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         diagramObjectEditor1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -118,8 +119,8 @@ public class DiagramEditor extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(diagramObjectEditor1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(diagramObjectEditor3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(diagramObjectEditor2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(diagramObjectEditor2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(diagramObjectEditor3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -127,27 +128,25 @@ public class DiagramEditor extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(diagramObjectEditor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(diagramObjectEditor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(diagramObjectEditor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(diagramObjectEditor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
+
+        add(jPanel1, java.awt.BorderLayout.EAST);
+
+        diagramPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout diagramPanelLayout = new javax.swing.GroupLayout(diagramPanel);
         diagramPanel.setLayout(diagramPanelLayout);
         diagramPanelLayout.setHorizontalGroup(
             diagramPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, diagramPanelLayout.createSequentialGroup()
-                .addContainerGap(261, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 267, Short.MAX_VALUE)
         );
         diagramPanelLayout.setVerticalGroup(
             diagramPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, diagramPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 565, Short.MAX_VALUE)
         );
 
         add(diagramPanel, java.awt.BorderLayout.CENTER);
