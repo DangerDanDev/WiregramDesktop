@@ -20,7 +20,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import model.DiagramObject;
 import model.ListEventManager;
-import wiregram.gui.DiagramObjectChildrenTreeModel;
+import wiregram.gui.DiagramTreeModel;
 
 /**
  *
@@ -96,13 +96,10 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
     @Override
     public void listUpdated(ArrayList<DiagramObject> selectedItems) {
 
-        //DefaultComboBoxModel model = (DefaultComboBoxModel<DiagramObject>)cbPrimaryItem.getModel();
-        //model.removeAllElements();
-
         if(selectedItems == null || selectedItems.isEmpty()) 
             setPrimaryItem(null);
         else {
-            DiagramObjectChildrenTreeModel model = new DiagramObjectChildrenTreeModel("Selection", selectedItems);
+            DiagramTreeModel model = new DiagramTreeModel("Selection", selectedItems);
             selectedItemsTree.setModel(model);
 
             TreePath primaryItemPath = model.getPath(selectedItems.getFirst());

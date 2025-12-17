@@ -16,7 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.DiagramObject;
 import model.ListEventManager;
-import wiregram.gui.DiagramObjectChildrenTreeModel;
+import wiregram.gui.DiagramTreeModel;
 
 /**
  *
@@ -87,7 +87,7 @@ public class DiagramObjectEditor1 extends javax.swing.JPanel implements ListSele
         else {
             model.addAll(selectedItems);
             setPrimaryItem(selectedItems.getFirst());
-            selectedItemsTree.setModel(new DiagramObjectChildrenTreeModel("Selection", selectedItems));
+            selectedItemsTree.setModel(new DiagramTreeModel("Selection", selectedItems));
         }
     }
     

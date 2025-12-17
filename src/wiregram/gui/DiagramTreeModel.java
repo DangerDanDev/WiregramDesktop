@@ -17,7 +17,7 @@ import model.Pin;
  * @author scyth
  * @param <T>
  */
-public class DiagramObjectChildrenTreeModel implements TreeModel{
+public class DiagramTreeModel implements TreeModel{
     
     private ArrayList<DiagramObject> nodes;
     public ArrayList<DiagramObject> getNodes() {
@@ -45,7 +45,7 @@ public class DiagramObjectChildrenTreeModel implements TreeModel{
         return new TreePath(pathNodes.toArray());
     }
     
-    public DiagramObjectChildrenTreeModel(Object root, ArrayList<DiagramObject> nodes) {
+    public DiagramTreeModel(Object root, ArrayList<DiagramObject> nodes) {
         this.root = root;
         setNodes(nodes);
     }
