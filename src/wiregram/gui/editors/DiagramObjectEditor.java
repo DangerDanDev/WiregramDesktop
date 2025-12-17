@@ -129,16 +129,21 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
         
         @Override
         public void listUpdated(ArrayList<DiagramObject> selectedItems) {
-            if(selectedItems == null || selectedItems.isEmpty()) 
+            
+            DiagramTreeModel diagramTreeModel = new DiagramTreeModel();
+            
+            if(selectedItems == null || selectedItems.isEmpty())  {
                 setPrimaryItem(null);
+                selectedItemsTree.setModel(new DiagramTreeModel());
+            }
             else {
-                diagramTreeModel = new DiagramTreeModel("Selection", selectedItems);
+                diagramTreeModel.setNodes("User Selection", selectedItems);
                 selectedItemsTree.setModel(diagramTreeModel);
 
                 TreePath primaryItemPath = diagramTreeModel.getPath(selectedItems.getFirst());
                 selectedItemsTree.getSelectionModel().setSelectionPath(primaryItemPath);
                 selectedItemsTree.scrollPathToVisible(primaryItemPath);
-            }
+            } 
         }
         
     };
@@ -179,6 +184,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
 
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        selectedItemsTree.setModel(new DiagramTreeModel());
         selectedItemsScroller.setViewportView(selectedItemsTree);
 
         jSplitPane1.setTopComponent(selectedItemsScroller);

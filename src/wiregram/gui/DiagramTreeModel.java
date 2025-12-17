@@ -5,6 +5,8 @@
 package wiregram.gui;
 
 import java.util.ArrayList;
+import javax.swing.event.EventListenerList;
+import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -24,8 +26,13 @@ public class DiagramTreeModel implements TreeModel{
         return nodes;
     }
     public final void setNodes(Object root, ArrayList<DiagramObject> nodes) {
+        Object oldRoot = this.root;
+        
         this.root = root;
         this.nodes = nodes;
+        
+        if(oldRoot != null)
+            onTreeStructureChanged(oldRoot);
     }
     
     private Object root;
@@ -42,7 +49,6 @@ public class DiagramTreeModel implements TreeModel{
         
         pathNodes.addFirst(root);
         
-        System.out.println(pathNodes.toString());
         return new TreePath(pathNodes.toArray());
     }
     
@@ -100,13 +106,33 @@ public class DiagramTreeModel implements TreeModel{
         return dobj_Parent.getChildren().indexOf(child);
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    /// TREE MODEL LISTENER EVENT HANDLING
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    
+    private final ArrayList<TreeModelListener> treeModelListeners = new ArrayList<>();
+    
     @Override
     public void addTreeModelListener(TreeModelListener l) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        treeModelListeners.add(l);
     }
 
     @Override
     public void removeTreeModelListener(TreeModelListener l) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        treeModelListeners.remove(l);
     }    
+    
+    /**
+     * Causes the whole tree to redraw itself
+     */
+    protected void onTreeStructureChanged(Object oldRoot) {
+        
+        /*TreeModelEvent e = new TreeModelEvent(this, 
+                                              new Object[] {oldRoot});
+        
+        for (TreeModelListener tml : treeModelListeners) 
+            tml.treeStructureChanged(e);*/
+    }
 }
