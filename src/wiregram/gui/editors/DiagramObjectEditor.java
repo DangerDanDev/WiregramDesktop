@@ -162,11 +162,13 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
     private void initComponents() {
 
         jSeparator1 = new javax.swing.JSeparator();
-        nameRefDesPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        tfName = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        tfRefDes = new javax.swing.JTextField();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        selectedItemsScroller = new javax.swing.JScrollPane();
+        selectedItemsTree = new javax.swing.JTree();
+        selectedItemsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        selectedItemsTree.addTreeSelectionListener(SELECTED_ITEMS_TREE_LISTENER);
+        primaryItemPanel = new javax.swing.JPanel();
+        btnSave = new javax.swing.JButton();
         locationSizePanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         locationX = new javax.swing.JSpinner();
@@ -176,13 +178,48 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
         width = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
         height = new javax.swing.JSpinner();
-        btnSave = new javax.swing.JButton();
-        selectedItemsScroller = new javax.swing.JScrollPane();
-        selectedItemsTree = new javax.swing.JTree();
-        selectedItemsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        selectedItemsTree.addTreeSelectionListener(SELECTED_ITEMS_TREE_LISTENER);
+        nameRefDesPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        tfName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        tfRefDes = new javax.swing.JTextField();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        selectedItemsScroller.setViewportView(selectedItemsTree);
+
+        jSplitPane1.setTopComponent(selectedItemsScroller);
+
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        locationSizePanel.setLayout(new java.awt.GridLayout(2, 4));
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel3.setText("X: ");
+        locationSizePanel.add(jLabel3);
+        locationSizePanel.add(locationX);
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel5.setText("Y: ");
+        locationSizePanel.add(jLabel5);
+        locationSizePanel.add(locationY);
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel4.setText("Width: ");
+        locationSizePanel.add(jLabel4);
+        locationSizePanel.add(width);
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setText("Height: ");
+        locationSizePanel.add(jLabel6);
+        locationSizePanel.add(height);
 
         jLabel1.setText("Name: ");
 
@@ -231,36 +268,31 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        locationSizePanel.setLayout(new java.awt.GridLayout(2, 4));
+        javax.swing.GroupLayout primaryItemPanelLayout = new javax.swing.GroupLayout(primaryItemPanel);
+        primaryItemPanel.setLayout(primaryItemPanelLayout);
+        primaryItemPanelLayout.setHorizontalGroup(
+            primaryItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(primaryItemPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(primaryItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(locationSizePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameRefDesPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        primaryItemPanelLayout.setVerticalGroup(
+            primaryItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(primaryItemPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nameRefDesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(locationSizePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSave)
+                .addContainerGap())
+        );
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel3.setText("X: ");
-        locationSizePanel.add(jLabel3);
-        locationSizePanel.add(locationX);
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel5.setText("Y: ");
-        locationSizePanel.add(jLabel5);
-        locationSizePanel.add(locationY);
-
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel4.setText("Width: ");
-        locationSizePanel.add(jLabel4);
-        locationSizePanel.add(width);
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Height: ");
-        locationSizePanel.add(jLabel6);
-        locationSizePanel.add(height);
-
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
-        selectedItemsScroller.setViewportView(selectedItemsTree);
+        jSplitPane1.setRightComponent(primaryItemPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -268,29 +300,15 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(selectedItemsScroller, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(locationSizePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(nameRefDesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(selectedItemsScroller, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameRefDesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(locationSizePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSave)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -309,10 +327,12 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JPanel locationSizePanel;
     private javax.swing.JSpinner locationX;
     private javax.swing.JSpinner locationY;
     private javax.swing.JPanel nameRefDesPanel;
+    private javax.swing.JPanel primaryItemPanel;
     private javax.swing.JScrollPane selectedItemsScroller;
     private javax.swing.JTree selectedItemsTree;
     private javax.swing.JTextField tfName;
