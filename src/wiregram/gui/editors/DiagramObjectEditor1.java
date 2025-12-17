@@ -14,10 +14,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 import model.DiagramObject;
 import model.ListEventManager;
 import wiregram.gui.DiagramObjectChildrenTreeModel;
@@ -26,12 +22,12 @@ import wiregram.gui.DiagramObjectChildrenTreeModel;
  *
  * @author scyth
  */
-public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelectionListener, ListEventManager.ListListener<DiagramObject> {
+public class DiagramObjectEditor1 extends javax.swing.JPanel implements ListSelectionListener, ListEventManager.ListListener<DiagramObject> {
 
     /**
      * Creates new form DiagramObjectEditor
      */
-    public DiagramObjectEditor() {
+    public DiagramObjectEditor1() {
         initComponents();
     }
     
@@ -50,6 +46,8 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             locationY.setValue(item.getY());
             width.setValue(item.getWidth());
             height.setValue(item.getHeight());
+            
+            cbPrimaryItem.setSelectedItem(item);
         } 
     }
 
@@ -74,43 +72,24 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         getPrimaryItem().setSize((int)width.getValue(), (int)height.getValue());
     }
     
-    public final SelectionTreeListener selectionTreeListener = new SelectionTreeListener();
-    private class SelectionTreeListener implements TreeSelectionListener {
-        /**
-         * Listens for selection events from selectedItemsTree
-         * @param e 
-         */
-        @Override
-        public void valueChanged(TreeSelectionEvent e) {
-            
-            if(selectedItemsTree.getLastSelectedPathComponent() instanceof DiagramObject selection) 
-                setPrimaryItem(selection);
-            
-        }
-    }
-
     /**
      * Listens for changes in Diagram.SelectionManager's selected items list
      * @param selectedItems 
      */
     @Override
     public void listUpdated(ArrayList<DiagramObject> selectedItems) {
-
-        //DefaultComboBoxModel model = (DefaultComboBoxModel<DiagramObject>)cbPrimaryItem.getModel();
-        //model.removeAllElements();
-
+        
+        DefaultComboBoxModel model = (DefaultComboBoxModel<DiagramObject>)cbPrimaryItem.getModel();
+        model.removeAllElements();
+        
         if(selectedItems == null || selectedItems.isEmpty()) 
-            setPrimaryItem(null);
+        setPrimaryItem(null);
         else {
-            DiagramObjectChildrenTreeModel model = new DiagramObjectChildrenTreeModel("Selection", selectedItems);
-            selectedItemsTree.setModel(model);
-
-            TreePath primaryItemPath = model.getPath(selectedItems.getFirst());
-            selectedItemsTree.getSelectionModel().setSelectionPath(primaryItemPath);
-            selectedItemsTree.scrollPathToVisible(primaryItemPath);
+            model.addAll(selectedItems);
+            setPrimaryItem(selectedItems.getFirst());
+            selectedItemsTree.setModel(new DiagramObjectChildrenTreeModel("Selection", selectedItems));
         }
     }
-
     
     @Override
     public void setEnabled(boolean enabled) {
@@ -121,7 +100,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         width.setEnabled(enabled);
         height.setEnabled(enabled);
         
-        selectedItemsTree.setEnabled(enabled);
+        cbPrimaryItem.setEnabled(enabled);
         
         super.setEnabled(enabled);
     }
@@ -156,10 +135,9 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         jLabel6 = new javax.swing.JLabel();
         height = new javax.swing.JSpinner();
         btnSave = new javax.swing.JButton();
+        cbPrimaryItem = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         selectedItemsTree = new javax.swing.JTree();
-        selectedItemsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        selectedItemsTree.addTreeSelectionListener(this.selectionTreeListener);
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -210,32 +188,41 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             }
         });
 
+        cbPrimaryItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPrimaryItemActionPerformed(evt);
+            }
+        });
+
         jScrollPane2.setViewportView(selectedItemsTree);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2)
-                    .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfName, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                            .addComponent(tfRefDes))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfRefDes, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                            .addComponent(tfName)))
+                    .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbPrimaryItem, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addContainerGap()
+                .addComponent(cbPrimaryItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -257,9 +244,14 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         pushChangesToPrimaryItem();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void cbPrimaryItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPrimaryItemActionPerformed
+        setPrimaryItem((DiagramObject)cbPrimaryItem.getSelectedItem());
+    }//GEN-LAST:event_cbPrimaryItemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<DiagramObject> cbPrimaryItem;
     private javax.swing.JSpinner height;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

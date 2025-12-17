@@ -19,19 +19,35 @@ import model.Pin;
  */
 public class DiagramObjectChildrenTreeModel implements TreeModel{
     
-    private ArrayList<DiagramObject> parents;
-    public ArrayList<DiagramObject> getParents() {
-        return parents;
+    private ArrayList<DiagramObject> nodes;
+    public ArrayList<DiagramObject> getNodes() {
+        return nodes;
     }
-    public final void setParents(ArrayList<DiagramObject> parents) {
-        this.parents = parents;
+    public final void setNodes(ArrayList<DiagramObject> nodes) {
+        this.nodes = nodes;
     }
     
     private final Object root;
     
-    public DiagramObjectChildrenTreeModel(Object root, ArrayList<DiagramObject> parents) {
+    public TreePath getPath(DiagramObject node) {
+        ArrayList<Object> pathNodes = new ArrayList<>();
+        
+        do {
+            pathNodes.addFirst(node);
+            
+            if(node.getParent() != null)
+                node = node.getParent();
+        } while (node.getParent() != null);
+        
+        pathNodes.addFirst(root);
+        
+        System.out.println(pathNodes.toString());
+        return new TreePath(pathNodes.toArray());
+    }
+    
+    public DiagramObjectChildrenTreeModel(Object root, ArrayList<DiagramObject> nodes) {
         this.root = root;
-        setParents(parents);
+        setNodes(nodes);
     }
 
     @Override
@@ -44,7 +60,7 @@ public class DiagramObjectChildrenTreeModel implements TreeModel{
         //root of the tree model is a stand-in, the real root is
         //the ArrayList passed into the constructor
         if(!(parent instanceof DiagramObject))
-            return parents.get(index);
+            return nodes.get(index);
         
         DiagramObject dobj_Parent = (DiagramObject) parent;
         return dobj_Parent.getChildren().get(index);
@@ -53,7 +69,7 @@ public class DiagramObjectChildrenTreeModel implements TreeModel{
     @Override
     public int getChildCount(Object parent) {
         if(!(parent instanceof DiagramObject))
-            return parents.size();
+            return nodes.size();
         
         DiagramObject dobj_Parent = (DiagramObject) parent;
         return dobj_Parent.getChildren().size();
@@ -76,7 +92,7 @@ public class DiagramObjectChildrenTreeModel implements TreeModel{
     @Override
     public int getIndexOfChild(Object parent, Object child) {
         if(!(parent instanceof DiagramObject))
-            return parents.indexOf(child);
+            return nodes.indexOf(child);
         
         DiagramObject dobj_Parent = (DiagramObject) parent;
         return dobj_Parent.getChildren().indexOf(child);
