@@ -22,14 +22,14 @@ public class DiagramEditor extends javax.swing.JPanel {
     private Diagram diagram;
     public final void setDiagram(Diagram diagram){ 
         if(this.diagram != null)
-            getDiagram().getSelectionManager().addListener(diagramObjectEditor1.DIAGRAM_SELECTION_LISTENER);
+            getDiagram().getSelectionManager().addListener(diagramObjectEditor1.DIAGRAM_SELECTION_CHANGE_LISTENER);
         
         this.diagram = diagram; 
         diagramPanel.setDiagram(getDiagram());
         diagramItemsList1.setDiagram(getDiagram());
         
         if(this.diagram != null)
-            getDiagram().getSelectionManager().addListener(diagramObjectEditor1.DIAGRAM_SELECTION_LISTENER);
+            getDiagram().getSelectionManager().addListener(diagramObjectEditor1.DIAGRAM_SELECTION_CHANGE_LISTENER);
     }
     public final Diagram getDiagram() { return this.diagram; }
     
@@ -42,7 +42,7 @@ public class DiagramEditor extends javax.swing.JPanel {
         setDiagram(new Diagram());
         getDiagram().getSelectionManager().addListener(diagramItemsList1);
         
-        diagramItemsList1.addListSelectionListener(diagramObjectEditor1.MASTER_LIST_SELECTION_CHANGE_LISTENER);
+        //diagramItemsList1.addListSelectionListener(diagramObjectEditor1.MASTER_LIST_SELECTION_CHANGE_LISTENER);
         
         initFakeData();
     }

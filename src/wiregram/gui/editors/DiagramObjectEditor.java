@@ -20,6 +20,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import model.DiagramObject;
 import model.ListEventManager;
+import model.ListEventManager.ListListener;
 import wiregram.gui.DiagramTreeModel;
 
 /**
@@ -39,7 +40,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
     public void setPrimaryItem(DiagramObject item) {        
         this.primaryItem = item;
         
-        setVisible(this.primaryItem != null);
+        setEnabled(this.primaryItem != null);
         
         refreshChildList();
         
@@ -94,12 +95,12 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
     ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
     
-    public final SelectedItemsTreeListener SELECTED_ITEMS_TREE_LISTENER = new SelectedItemsTreeListener();
     /**
      * Listens for any changes in which DiagramObject is selected in the Tree
      * and calls setPrimaryItem(tree.SelectedItem
      */
-    private class SelectedItemsTreeListener implements TreeSelectionListener {
+    public final TreeSelectionListener SELECTED_ITEMS_TREE_LISTENER = new TreeSelectionListener() {
+    
         /**
          * Listens for selection events from selectedItemsTree
          * @param e 
@@ -111,46 +112,36 @@ public class DiagramObjectEditor extends javax.swing.JPanel {
                 setPrimaryItem(selection);
            
         }
-    }
+    };
+    
     
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
     /// EXTERNAL EVENT HANDLING
     ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    
-    public final MasterListSelectionChangeListener MASTER_LIST_SELECTION_CHANGE_LISTENER = new MasterListSelectionChangeListener();
-    private class MasterListSelectionChangeListener implements ListSelectionListener {
-        
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            JList source = (JList)e.getSource();
-            setPrimaryItem((DiagramObject)source.getSelectedValue());
-        }
-        
-    }
-
-    public final DiagramSelectionListener DIAGRAM_SELECTION_LISTENER = new DiagramSelectionListener();
+    ////////////////////////////////////////////////////////////////////////////////////////////    
     /**
      * Listens for changes to the SelectedItems list on the diagram
      */
-    public class DiagramSelectionListener implements ListEventManager.ListListener<DiagramObject> {
-
+    public final ListListener<DiagramObject> DIAGRAM_SELECTION_CHANGE_LISTENER = new ListListener<>() {
+        
+        private DiagramTreeModel diagramTreeModel = new DiagramTreeModel();
+        
         @Override
         public void listUpdated(ArrayList<DiagramObject> selectedItems) {
             if(selectedItems == null || selectedItems.isEmpty()) 
                 setPrimaryItem(null);
             else {
-                DiagramTreeModel model = new DiagramTreeModel("Selection", selectedItems);
-                selectedItemsTree.setModel(model);
+                diagramTreeModel = new DiagramTreeModel("Selection", selectedItems);
+                selectedItemsTree.setModel(diagramTreeModel);
 
-                TreePath primaryItemPath = model.getPath(selectedItems.getFirst());
+                TreePath primaryItemPath = diagramTreeModel.getPath(selectedItems.getFirst());
                 selectedItemsTree.getSelectionModel().setSelectionPath(primaryItemPath);
                 selectedItemsTree.scrollPathToVisible(primaryItemPath);
             }
         }
         
-    }
+    };
     
     /**
      * This method is called from within the constructor to initialize the form.

@@ -23,11 +23,12 @@ public class DiagramTreeModel implements TreeModel{
     public ArrayList<DiagramObject> getNodes() {
         return nodes;
     }
-    public final void setNodes(ArrayList<DiagramObject> nodes) {
+    public final void setNodes(Object root, ArrayList<DiagramObject> nodes) {
+        this.root = root;
         this.nodes = nodes;
     }
     
-    private final Object root;
+    private Object root;
     
     public TreePath getPath(DiagramObject node) {
         ArrayList<Object> pathNodes = new ArrayList<>();
@@ -46,9 +47,10 @@ public class DiagramTreeModel implements TreeModel{
     }
     
     public DiagramTreeModel(Object root, ArrayList<DiagramObject> nodes) {
-        this.root = root;
-        setNodes(nodes);
+        setNodes(root, nodes);
     }
+    
+    public DiagramTreeModel() {}
 
     @Override
     public Object getRoot() {
