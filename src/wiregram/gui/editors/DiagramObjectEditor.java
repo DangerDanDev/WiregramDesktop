@@ -26,7 +26,7 @@ import wiregram.gui.DiagramTreeModel;
  *
  * @author scyth
  */
-public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelectionListener{
+public class DiagramObjectEditor extends javax.swing.JPanel {
 
     /**
      * Creates new form DiagramObjectEditor
@@ -74,10 +74,30 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         getPrimaryItem().setSize((int)width.getValue(), (int)height.getValue());
     }
     
+    @Override
+    public void setEnabled(boolean enabled) {
+        tfName.setEnabled(enabled);
+        tfRefDes.setEnabled(enabled);
+        locationX.setEnabled(enabled);
+        locationY.setEnabled(enabled);
+        width.setEnabled(enabled);
+        height.setEnabled(enabled);
+        
+        selectedItemsTree.setEnabled(enabled);
+        
+        super.setEnabled(enabled);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    /// INTERNAL EVENT HANDLING
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    
     public final SelectedItemsTreeListener SELECTED_ITEMS_TREE_LISTENER = new SelectedItemsTreeListener();
     /**
      * Listens for any changes in which DiagramObject is selected in the Tree
-     * and calls setPrimaryItem(tree.SelectedItem)
+     * and calls setPrimaryItem(tree.SelectedItem
      */
     private class SelectedItemsTreeListener implements TreeSelectionListener {
         /**
@@ -92,9 +112,25 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
            
         }
     }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    /// EXTERNAL EVENT HANDLING
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    
+    public final MasterListSelectionChangeListener MASTER_LIST_SELECTION_CHANGE_LISTENER = new MasterListSelectionChangeListener();
+    private class MasterListSelectionChangeListener implements ListSelectionListener {
+        
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            JList source = (JList)e.getSource();
+            setPrimaryItem((DiagramObject)source.getSelectedValue());
+        }
+        
+    }
 
     public final DiagramSelectionListener DIAGRAM_SELECTION_LISTENER = new DiagramSelectionListener();
-    
     /**
      * Listens for changes to the SelectedItems list on the diagram
      */
@@ -114,26 +150,6 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             }
         }
         
-    }
-    
-    @Override
-    public void setEnabled(boolean enabled) {
-        tfName.setEnabled(enabled);
-        tfRefDes.setEnabled(enabled);
-        locationX.setEnabled(enabled);
-        locationY.setEnabled(enabled);
-        width.setEnabled(enabled);
-        height.setEnabled(enabled);
-        
-        selectedItemsTree.setEnabled(enabled);
-        
-        super.setEnabled(enabled);
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        JList source = (JList)e.getSource();
-        setPrimaryItem((DiagramObject)source.getSelectedValue());
     }
     
     /**
@@ -163,7 +179,7 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         jScrollPane2 = new javax.swing.JScrollPane();
         selectedItemsTree = new javax.swing.JTree();
         selectedItemsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        selectedItemsTree.addTreeSelectionListener(this.selectionTreeListener);
+        selectedItemsTree.addTreeSelectionListener(SELECTED_ITEMS_TREE_LISTENER);
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

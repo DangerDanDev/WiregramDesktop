@@ -158,7 +158,7 @@
       <SubComponents>
         <Component class="javax.swing.JTree" name="selectedItemsTree">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="selectedItemsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);&#xd;&#xa;selectedItemsTree.addTreeSelectionListener(this.selectionTreeListener);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="selectedItemsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);&#xd;&#xa;selectedItemsTree.addTreeSelectionListener(SELECTED_ITEMS_TREE_LISTENER);"/>
           </AuxValues>
         </Component>
       </SubComponents>
