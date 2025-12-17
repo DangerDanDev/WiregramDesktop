@@ -26,7 +26,7 @@ import wiregram.gui.DiagramTreeModel;
  *
  * @author scyth
  */
-public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelectionListener, ListEventManager.ListListener<DiagramObject> {
+public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelectionListener{
 
     /**
      * Creates new form DiagramObjectEditor
@@ -74,8 +74,12 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
         getPrimaryItem().setSize((int)width.getValue(), (int)height.getValue());
     }
     
-    public final SelectionTreeListener selectionTreeListener = new SelectionTreeListener();
-    private class SelectionTreeListener implements TreeSelectionListener {
+    public final SelectedItemsTreeListener SELECTED_ITEMS_TREE_LISTENER = new SelectedItemsTreeListener();
+    /**
+     * Listens for any changes in which DiagramObject is selected in the Tree
+     * and calls setPrimaryItem(tree.SelectedItem)
+     */
+    private class SelectedItemsTreeListener implements TreeSelectionListener {
         /**
          * Listens for selection events from selectedItemsTree
          * @param e 
@@ -85,29 +89,32 @@ public class DiagramObjectEditor extends javax.swing.JPanel implements ListSelec
             
             if(selectedItemsTree.getLastSelectedPathComponent() instanceof DiagramObject selection) 
                 setPrimaryItem(selection);
-            
+           
         }
     }
 
+    public final DiagramSelectionListener DIAGRAM_SELECTION_LISTENER = new DiagramSelectionListener();
+    
     /**
-     * Listens for changes in Diagram.SelectionManager's selected items list
-     * @param selectedItems 
+     * Listens for changes to the SelectedItems list on the diagram
      */
-    @Override
-    public void listUpdated(ArrayList<DiagramObject> selectedItems) {
+    public class DiagramSelectionListener implements ListEventManager.ListListener<DiagramObject> {
 
-        if(selectedItems == null || selectedItems.isEmpty()) 
-            setPrimaryItem(null);
-        else {
-            DiagramTreeModel model = new DiagramTreeModel("Selection", selectedItems);
-            selectedItemsTree.setModel(model);
+        @Override
+        public void listUpdated(ArrayList<DiagramObject> selectedItems) {
+            if(selectedItems == null || selectedItems.isEmpty()) 
+                setPrimaryItem(null);
+            else {
+                DiagramTreeModel model = new DiagramTreeModel("Selection", selectedItems);
+                selectedItemsTree.setModel(model);
 
-            TreePath primaryItemPath = model.getPath(selectedItems.getFirst());
-            selectedItemsTree.getSelectionModel().setSelectionPath(primaryItemPath);
-            selectedItemsTree.scrollPathToVisible(primaryItemPath);
+                TreePath primaryItemPath = model.getPath(selectedItems.getFirst());
+                selectedItemsTree.getSelectionModel().setSelectionPath(primaryItemPath);
+                selectedItemsTree.scrollPathToVisible(primaryItemPath);
+            }
         }
+        
     }
-
     
     @Override
     public void setEnabled(boolean enabled) {
